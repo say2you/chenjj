@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.say2you.dao.WchatServerDao">
+
+    <resultMap id="ServerResult" type="net.say2you.model.WchatServer">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="serverip" property="serverIp" jdbcType="VARCHAR" />
+		<result column="servermemory" property="serverMemory" jdbcType="VARCHAR" />
+		<result column="servercpu" property="serverCpu" jdbcType="VARCHAR"	 />
+		<result column="adminname" property="adminName" jdbcType="VARCHAR"	 />
+		<result column="admintel" property="adminTel" jdbcType="VARCHAR"	 />
+		<result column="adminemail" property="adminEmail" jdbcType="VARCHAR" />		
+		<result column="servername" property="serverName" jdbcType="VARCHAR" />
+		<result column="serverslb" property="serverSlb" jdbcType="VARCHAR"	/>
+		<result column="serverdesc" property="serverDesc" jdbcType="VARCHAR"	 />	
+		<result column="externalip" property="externalIp" jdbcType="VARCHAR"	/>
+		<result column="serverdisk" property="serverDisk" jdbcType="VARCHAR"	 />	
+		<result column="usestartdate" property="useStartDate" jdbcType="TIMESTAMP"	/>
+		<result column="useenddate" property="useEndDate" jdbcType="TIMESTAMP"	 />	
+		
+	</resultMap>    
+   
+<select id="getServerList" resultMap="ServerResult">   
+select * from wchat_server  where 1=1
+<if test="serverIp!=null">
+and serverip = #{serverIp}
+</if>
+<if test="serverMemory!=null">
+and servermemory=#{serverMemory}
+</if>
+<if test="serverCpu!=null">
+and servercpu=#{serverCpu}
+</if>
+<if test="adminName!=null">
+and adminname like'%${adminName}%'
+</if>
+<if test="adminTel!=null">
+and admintel like'%${adminTel}%'
+</if>
+<if test="adminEmail!=null">
+and adminemail like'%${adminEmail}%'
+</if>
+<if test="serverName!=null">
+and servername like'%${serverName}%'
+</if>
+<if test="serverSlb!=null">
+and serverslb =#{serverSlb}
+</if>
+<if test="serverDesc!=null">
+and serverdesc like '%${serverDesc}%'
+</if>
+<if test="externalIp!=null">
+and externalip=#{externalIp}
+</if>
+<if test="serverDisk!=null">
+and serverdisk=${serverDisk}
+</if>
+    </select>
+    <select id="getServerById" resultMap="ServerResult" parameterType="java.lang.Integer">
+    select * from wchat_server  where id=#{id}
+    </select>
+    
+</mapper>
